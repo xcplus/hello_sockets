@@ -27,6 +27,7 @@ curl -i "http://localhost:4000/socket/websocket?vsn=2.0.0"
 2. 可以透明地利用协议的改进，例如HTTP的未来版本。 Google是互联网协议的创新者，它利用一种长期轮询的自定义形式来为某些实时应用程序提供支持。
 
 # Phoenix
+```
                                                                   +----------------+
                                                      +--Topic X-->| Mobile Client  |
                                                      |            +----------------+
@@ -38,7 +39,7 @@ curl -i "http://localhost:4000/socket/websocket?vsn=2.0.0"
                                                      |            +----------------+
                                                      +--Topic X-->|   IoT Client   |
                                                                   +----------------+
-
+```
 
 # Phoenix Channels
 
@@ -46,7 +47,7 @@ curl -i "http://localhost:4000/socket/websocket?vsn=2.0.0"
 
 使用Phoenix.Socket的模块可以将客户端请求的主题路由到提供的Phoenix.Channel实现模块。 Channel模块针对用户连接到的每个不同主题启动一个单独的进程。 Channel像传输进程一样，永远不会在不同的连接之间共享。
 
-
+```
 ----------------         -----------------       ---------------------------
 |client request|   --->  | Phoenix.Socket|  -->  |扩展了Phoenix.Channel的模块| 
 ----------------         -----------------       ---------------------------
@@ -54,6 +55,7 @@ curl -i "http://localhost:4000/socket/websocket?vsn=2.0.0"
     -------------
 --> |  process  |
     -------------
+```
 
 ### Sockets
 
