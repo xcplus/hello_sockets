@@ -93,7 +93,7 @@ Phoenix.PubSub（发布者/订阅者）在我们的实时应用程序中为Topic
 
 PubSub链接在本地节点和所有连接的远程节点之间。 这使PubSub可以在整个群集中广播消息。 当客户端处于连接到群集节点A的消息来自群集节点B的情况下，远程消息广播非常重要。 PubSub开箱即用为我们处理此问题，但我们确实需要确保节点之间可以互相通信。 PubSub随附了pg2适配器。 还有一个Redis PubSub适配器，它允许使用PubSub而无需将节点群集在一起。
 
-当我们调用HelloSocketsWeb.Endpoint.broadcast / 3函数时，将使用PubSub
+当我们调用HelloSocketsWeb.Endpoint.broadcast/3函数时，将使用PubSub
 
 # 发送和接受消息
 
@@ -128,3 +128,17 @@ PubSub链接在本地节点和所有连接的远程节点之间。 这使PubSub�
 - 接收来自Topic的消息
 - 妥善处理断开连接和其他错误； 尝试尽可能保持连接
 
+
+# 限制套接字和通道访问 Restrict Socket and Channel Access
+
+注：Phoenix提供了两个不同的入口，可以在其中添加访问限制。身份验证在Socket的Socket.connect/3函数中处理，而授权在Channel的Channel.join/3函数中处理。您将同时使用两种限制来完全保护您的实时应用程序。
+
+### 给Socket添加身份验证
+
+心跳和附加连接意味着，许多空闲Channel的成本低于许多空闲Socket的成本.
+
+在决定是添加新的Socket还是添加新的Channel Topic时使用现有的Socket时，应首先考虑应用程序的身份验证需求。当您编写一个具有单独的实时功能或供用户和管理员使用的页面的系统时，您将添加一个新的Socket。这是因为用户将无法连接到管理员特定的功能，因此应拒绝连接到Socket。像这样分开Socket身份验证会导致系统中更简单的代码。当身份验证需求相同时，您将添加到现有Socket。
+
+通常，将多个Channel与单个Socket一起使用。如果您的应用程序在应用程序的不同部分之间具有不同的身份验证需求，请使用多个Socket。这种方法导致系统架构具有最低的资源使用率。
+
+# Next Chapter 5

@@ -10,6 +10,11 @@ import {Socket} from "phoenix"
 
 let socket = new Socket("/socket", {params: {token: window.userToken}})
 
+const authSocket = new Socket("/auth_socket", {params: {token: window.authToken}})
+
+authSocket.onOpen(() => console.log("authSocket connected"));
+authSocket.connect();
+
 // When you connect, you'll often need to authenticate the client.
 // For example, imagine you have an authentication plug, `MyAuth`,
 // which authenticates the session and assigns a `:current_user`.
@@ -88,5 +93,10 @@ channel.on('send_ping', (payload) => {
   channel.push("ping")
     .receive("ok", resp => console.log("ping:", resp.ping))
 })
+
+channel.push("invalid")
+  .receive("ok", resp => console.log("won't happen"))
+  .receive("error", resp => console.error("won't happen"))
+  .receive("timeout", resp => console.error("invalid event timeout"))
 
 export default socket
