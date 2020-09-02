@@ -12,8 +12,20 @@ let socket = new Socket("/socket", {params: {token: window.userToken}})
 
 const authSocket = new Socket("/auth_socket", {params: {token: window.authToken}})
 
+const dupeChannel = socket.channel("dupe")
+dupeChannel.on("number", (payload) => {
+  console.log("new number received", payload)
+})
+
+dupeChannel.join()
+
 authSocket.onOpen(() => console.log("authSocket connected"));
 authSocket.connect();
+const recurringChannel = authSocket.channel("recurring");
+recurringChannel.on("new_token", (payload) => {
+  console.log("received new auth token", payload)
+});
+recurringChannel.join();
 
 // When you connect, you'll often need to authenticate the client.
 // For example, imagine you have an authentication plug, `MyAuth`,

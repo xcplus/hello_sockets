@@ -8,6 +8,7 @@ defmodule HelloSocketsWeb.UserSocket do
   channel "ping", HelloSocketsWeb.PingChannel
   # 将会为wild:的Topic路由到WildcardChannel
   channel "wild:*", HelloSocketsWeb.WildcardChannel
+  channel "dupe", HelloSocketsWeb.DedupeChannel
 
   # Socket params are passed from the client and can
   # be used to verify and authenticate a user. After
