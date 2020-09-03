@@ -41,7 +41,9 @@ defmodule HelloSockets.MixProject do
       {:telemetry_poller, "~> 0.4"},
       {:gettext, "~> 0.11"},
       {:jason, "~> 1.0"},
-      {:plug_cowboy, "~> 2.0"}
+      {:plug_cowboy, "~> 2.0"},
+      {:statix, "~> 1.1"},
+      {:statsd_logger, "~> 1.1", only: [:dev, :test]}
     ]
   end
 
